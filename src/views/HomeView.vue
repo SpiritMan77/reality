@@ -7,11 +7,11 @@
 <script>
 // @ is an alias to /src
 
-
 export default {
   name: 'HomeView',
-  components: {
-
+  components: {},
+  data() {
+    return {}
   }
 }
 </script>

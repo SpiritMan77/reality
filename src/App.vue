@@ -1,10 +1,26 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+    <nav>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+    </nav>
+  <div class="home">
+    <Navigation />
+  </div>
   <router-view/>
 </template>
+
+<script>
+// @ is an alias to /src
+import Navigation from "@/components/Navigation";
+
+export default {
+  name: 'HomeView',
+  components: {Navigation},
+  data() {
+    return {}
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
