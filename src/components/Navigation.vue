@@ -1,10 +1,9 @@
 <template>
   <div class="navigation">
     <ul>
-      <li><a class="active" to="/"</a></li>
-      <li><a href="#news">News</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a to="/about">About</a></li>
+      <li><router-link to="/">Domov</router-link> </li>
+      <li> <router-link to="/reals">Nehnutelnosti</router-link> </li>
+      <li> <router-link to="/about">O nas</router-link> </li>
     </ul>
 
   </div>
@@ -13,6 +12,14 @@
 <script>
 export default {
   name: 'Navigation',
+  data() {
+    return {
+      links: [
+        { text: "Home", route: "/" },
+        { text: "Follow list", route: "/about" },
+      ],
+    }
+  }
 }
 </script>
 
