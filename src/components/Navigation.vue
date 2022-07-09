@@ -1,22 +1,31 @@
 <template>
   <div class="navigation">
     <ul>
-      <li><router-link to="/">Domov</router-link> </li>
-      <li> <router-link to="/reals">Nehnutelnosti</router-link> </li>
-      <li> <router-link to="/about">O nas</router-link> </li>
+      <li>
+        <router-link to="/">Domov</router-link>
+      </li>
+      <span class="p-input-icon-left">
+            <i class="pi pi-search"/>
+            <InputText type="text" v-model="value3" placeholder="Search" style="height: 30px; margin-top: 20px"/>
+        </span>
+      <!--      <li> <router-link to="/reals">Nehnutelnosti</router-link> </li>-->
+      <!--      <li> <router-link to="/about">O nas</router-link> </li>-->
     </ul>
 
   </div>
 </template>
 
 <script>
+import InputText from 'primevue/inputtext';
+
 export default {
   name: 'Navigation',
+  components: {InputText},
   data() {
     return {
       links: [
-        { text: "Home", route: "/" },
-        { text: "Follow list", route: "/about" },
+        {text: "Home", route: "/"},
+        {text: "Follow list", route: "/about"},
       ],
     }
   }
