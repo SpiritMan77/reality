@@ -6,12 +6,10 @@ export default createStore({
         data: reals,
     },
     mutations: {
-        ADD_REAL: (state, data) => {
-            state.data.push(data.newReal);
+        ADD_REAL: (state, newReal) => {
+            state.data.push(newReal);
         },
-        addReal(state, real) {
-            state.data.push(real);
-        },
+
         REMOVE_REAL: (state, index) => {
             state.data.splice(index, 1);
         },

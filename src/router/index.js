@@ -14,7 +14,7 @@ const routes = [
     component: RealEstate
   },
   {
-    path: "/realView/:id",
+    path: "/realView",
     name: "realView",
     component: () => import('../views/RealView.vue'),
     props: true,

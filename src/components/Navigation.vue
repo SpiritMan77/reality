@@ -5,8 +5,8 @@
         <router-link to="/">Domov</router-link>
       </li>
       <span class="p-input-icon-left">
-            <i class="pi pi-search"/>
-            <InputText type="text" v-model="value3" placeholder="Search" style="height: 30px; margin-top: 20px"/>
+<!--            <i class="pi pi-search"/>-->
+        <!--            <InputText type="text" v-model="value3" placeholder="Search" style="height: 30px; margin-top: 20px"/>-->
         </span>
       <!--      <li> <router-link to="/reals">Nehnutelnosti</router-link> </li>-->
       <!--      <li> <router-link to="/about">O nas</router-link> </li>-->
@@ -16,11 +16,11 @@
 </template>
 
 <script>
-import InputText from 'primevue/inputtext';
+// import InputText from 'primevue/inputtext';
 
 export default {
   name: 'Navigation',
-  components: {InputText},
+  // components: {InputText},
   data() {
     return {
       links: [
@@ -34,6 +34,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.navigation {
+  padding-bottom: 20px;
+}
 ul {
   list-style-type: none;
   margin: 0;

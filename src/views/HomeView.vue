@@ -1,9 +1,10 @@
 <template>
   <div class="home">
-    <div class="parent">
+    <div class="parent" v-for="real in getDatas" :key="real">
       <span></span>
-      <Button icon="pi pi-filter" class="p-button-rounded p-button-secondary buttons"
-              @click="displayMaximizable=true "/>
+      <MultiSelect v-model="selectedGroupedCities" :options="groupedCities" optionLabel="label" optionGroupLabel="label"
+                   :optionGroupChildren="real.category" placeholder="Select Cities">
+      </MultiSelect>
       <Button icon="pi pi-plus" class="p-button-rounded p-button-secondary buttons"
               @click="displayMaximizable=true "/>
     </div>
@@ -46,13 +47,13 @@
     <div class="container">
       <div class="row">
         <router-link to=""></router-link>
-        <div class="col-md-3" style="padding-bottom: 50px; padding-top: 50px" v-for="real in data" :key="real.id">
-          <router-link :to="{name: 'realView', params: {real: JSON.stringify(real), id: real.id}  }"
+        <div class="col-md-3" style="padding-bottom: 50px; padding-top: 50px" v-for="real in getDatas" :key="real">
+          <router-link :to="{name: 'realView', params: {real: JSON.stringify(real)}  }"
                        style="text-decoration: none">
             <Card style="width: 20em; height: 600px"
             >
               <template #header>
-                <img :src="require(`../assets/images/${real.images[0].image}.jpeg`)"
+                <img :src="require(`../assets/images/${real.image}.jpeg`)"
                      style="height: 15rem"/>
               </template>
               <template #title>
@@ -81,132 +82,179 @@ import Card from "primevue/card";
 import Button from 'primevue/button';
 import Dialog from 'primevue/dialog';
 import Textarea from 'primevue/textarea';
-// import {mapMutations, mapGetters} from "vuex";
-
-import {ref, computed, reactive} from 'vue';
-import {useStore} from "vuex";
+import MultiSelect from 'primevue/multiselect';
+import {mapMutations, mapGetters} from "vuex";
 
 export default {
   name: 'HomeView',
-  components: {
-    Card,
-    Button,
-    Dialog,
-    Textarea,
-  },
-  setup() {
-    const store = useStore();
-    let displayMaximizable = ref(false);
-    // let displayPosition = ref(false);
-    const position = ref('center');
-    let input = ref("");
-    // const fruits = ["apple", "banana", "orange"];
-    const newReal = reactive({
-      id: "5",
-      title: "",
-      location: "",
-      price: "",
-      category: "",
-      area: "",
-      condition: "",
-      text: ""
-    })
-
-    let data = computed(function () {
-      return store.state.data
-    });
-
-    // function filteredList() {
-    //   return fruits.filter((fruit) =>
-    //       fruit.toLowerCase().includes(input.value.toLowerCase())
-    //   );
-    // }
-
-    let closeMaximizableComp = computed(function () {
-      return displayMaximizable = false
-    })
-
-
-    // function closeMaximizable() {
-    //   displayMaximizable = false;
-    // }
-
-    function addToReals() {
-      store.commit("addReal", newReal);
-      displayMaximizable = false;
-    }
-
-    // function increaseId() {
-    //   data.forEach((id) => {
-    //
-    //   })
-    // }
-
+  components: {Card, Button, Dialog, Textarea, MultiSelect},
+  data() {
     return {
-      data,
-      addToReals,
-      // displayPosition,
-      displayMaximizable,
-      position,
-      newReal,
-      input,
-      // filteredList,
-      // closeMaximizable,
-      closeMaximizableComp,
+      displayMaximizable: false,
+      displayPosition: false,
+      position: 'center',
+      value2: "",
+      data: this.getData,
+      selectedGroupedCities: null,
+      groupedCities: [
+        {
+          label: 'Typ',
+          items: [
+            {label: 'Test', value: 'Kyoto'},
+            {label: 'Osaka', value: 'Osaka'},
+            {label: 'Tokyo', value: 'Tokyo'},
+            {label: 'Yokohama', value: 'Yokohama'}
+          ]
+        }],
+      newReal: {
+        title: "",
+        location: "",
+        price: "",
+        category: "",
+        area: "",
+        condition: "",
+        text: "",
+        image: "byt1"
+      }
     }
-  }
+  },
+  computed: {
+    ...mapGetters([
+      'getData',
+    ]),
+    getDatas() {
+      return this.getData
+    },
 
+    rightProperty() {
+      return this.getData[this.sport].filter((a) => {
+        if (this.stateFilter.length === 0) return true;
+        else if (this.stateFilter.indexOf(a.state) >= 0) return true;
+        return false;
+      });
+    },
+    rightMatches() {
+      return this.getMatches(this.sport).filter((a) => {
+        if (this.stateFilter.length === 0) return true;
+        else if (
+            this.stateFilter.indexOf(this.getTeamState(this.sport, a.team1)) >=
+            0 ||
+            this.stateFilter.indexOf(this.getTeamState(this.sport, a.team2)) >= 0
+        )
+          return true;
+        return false;
+      });
+    },
+  },
+  methods: {
+    ...mapMutations([
+      'ADD_REAL',
+    ]),
+
+    addToReals() {
+      this.ADD_REAL(this.newReal)
+      this.closeDialog()
+    },
+
+    closeDialog() {
+      this.displayMaximizable = false;
+    },
+
+    openMaximizable() {
+      this.displayMaximizable = true;
+    },
+
+    closeMaximizable() {
+      this.displayMaximizable = false;
+    },
+
+    // getItems() {
+    //   this.getDatas.category
+    // },
+  }
 }
-//
+
+
+// import {ref, computed, reactive} from 'vue';
+// import {useStore} from "vuex";
+
 // export default {
 //   name: 'HomeView',
-//   components: {Card, Button, Dialog, Textarea},
-//   data() {
-//     return {
-//       displayMaximizable: false,
-//       displayPosition: false,
-//       position: 'center',
-//       value2: "",
-//       store: useStore(),
-//       newReal: {
-//         id: "5",
-//         title: "",
-//         location: "",
-//         price: "",
-//         category: "",
-//         area: "",
-//         condition: "",
-//         text: ""
+//   components: {
+//     Card,
+//     Button,
+//     Dialog,
+//     Textarea,
+//   },
+//   setup() {
+//     const store = useStore();
+//     let displayMaximizable = ref(false);
+//     const position = ref('center');
+//     let input = ref("");
+//     const newReal = reactive({
+//       id: "5",
+//       title: "",
+//       location: "",
+//       price: "",
+//       category: "",
+//       area: "",
+//       condition: "",
+//       text: "",
+//       images: {
+//         image: "byt1"
 //       }
-//     }
-//   },
-//   computed: {
-//     ...mapGetters([
-//       'getData',
-//     ]),
-//   },
-//   methods: {
-//     ...mapMutations([
-//       'ADD_REAL',
-//       'addReal'
-//     ]),
-//     addReal() {
-//       this.addReal(this.newReal)
-//       // this.displayMaximizable = false;
-//     },
-//     addToReals() {
-//       this.store.commit("addReal", this.newReal);
-//     },
-//     openMaximizable() {
-//       this.displayMaximizable = true;
-//     }
-//     ,
-//     closeMaximizable() {
-//       this.displayMaximizable = false;
-//     }
-//     ,
+//     })
+
+// let data = computed(function () {
+//   return store.state.data
+// });
+
+// function filteredList() {
+//   return fruits.filter((fruit) =>
+//       fruit.toLowerCase().includes(input.value.toLowerCase())
+//   );
+// }
+
+// let closeMaximizableComp = computed(function () {
+//   return displayMaximizable = false
+// })
+
+
+// function closeMaximizable() {
+//   displayMaximizable = false;
+// }
+
+// function addToReals() {
+//   store.commit("addReal", newReal);
+//   displayMaximizable = false;
+// }
+
+// function addToReals() {
+//   this.addReal( "newReal", newReal );
+//   // displayMaximizable = false;
+// }
+
+
+// function increaseId() {
+//   data.forEach((id) => {
+//
+//   })
+// }
+
+//   return {
+//     data: computed(() => store.state.data),
+//     addToReals,
+//     displayMaximizable,
+//     position,
+//     newReal,
+//     input,
+//     // filteredList,
+//     closeMaximizableComp,
 //   }
 // }
+
+// }
+
 </script>
 
 <style scoped>
@@ -225,5 +273,6 @@ export default {
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+  padding-right: 10px;
 }
 </style>

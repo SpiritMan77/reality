@@ -1,6 +1,6 @@
 export const reals = [
     {
-        id: "1",
+        // id: "1",
         name: "Príjemný bytík blízko centra po kompletnej rekonštrukcii",
         location: "Šaľa",
         price: "94 000 €",
@@ -24,14 +24,12 @@ export const reals = [
             "Prináleží k nemu pivničný priestor a priestor pod schodami pre bicykle.\n" +
             "\n" +
             "Výhody: slnečný, pekný výhľad, tiché prostredie, obchody, škola, škôlka, nemocnica, zastávka autobusu, zateplený bytový dom. Cena 94 000 €",
-        images: [
-            {
-                image: "byt1"
-            }
-        ]
+
+        image: "byt1"
+
     },
     {
-        id: "2",
+        // id: "2",
         name: "Krásny 4 izb. bungalov - Ivanka pri Dunaji",
         location: "Ivanka pri Dunaji, okres Senec",
         price: "375 000 €",
@@ -67,14 +65,13 @@ export const reals = [
             "Lokalita:\n" +
             "\n" +
             "Lokalita ideálna pre rodinu, ktorá hľadá dostatok súkromia, avšak chce mať všetku potrebnú vybavenosť v dobrej dostupnosti. Jedná sa o okrajovú časť Ivanky pri Dunaji z ktorej je centrum obce vzdialené iba 2 minúty autom, prípadne 10 minút chôdze.    ",
-        images: [
-            {
-                image: "dom1"
-            }
-        ]
+
+        image: "dom1"
+
+
     },
     {
-        id: "3",
+        // id: "3",
         name: "4izb. novostavba s tepelným čerpadlom a pozemkom 440m2",
         location: "Gajary, Gajary, okres Malacky",
         price: "194 990 €",
@@ -92,14 +89,12 @@ export const reals = [
             "Plánované dokončenie 09/2022.\n" +
             "\n" +
             "IS: obecná voda, kanalizácia, elektrina.",
-        images: [
-            {
-                image: "dom2"
-            }
-        ]
+
+        image: "dom2"
+
     },
     {
-        id: "4",
+        // id: "4",
         name: "MODERNÝ 3i byt, REKONŠTRUKCIA",
         location: "Rezedová, Bratislava II - Ružinov, okres Bratislava",
         price: "140 000 €",
@@ -147,10 +142,8 @@ export const reals = [
             "\n" +
             "\n" +
             "Uvedená cena zahŕňa všetky poplatky súvisiace s nehnuteľnosťou, kompletný právny servis, prevod vlastníckych práv, atď...\n",
-        images: [
-            {
-                image: "byt2"
-            }
-        ]
+
+        image: "byt2"
+
     },
 ];
