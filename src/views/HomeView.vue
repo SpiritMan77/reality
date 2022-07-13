@@ -1,9 +1,14 @@
 <template>
   <div class="home">
-    <div class="parent" v-for="real in getDatas" :key="real">
+    <div class="parent">
       <span></span>
-      <MultiSelect v-model="selectedGroupedCities" :options="groupedCities" optionLabel="label" optionGroupLabel="label"
-                   :optionGroupChildren="real.category" placeholder="Select Cities">
+      <MultiSelect v-model="selectedGroupedCities" :options="getDatas" :optionLabel="getDatas.category"
+                    placeholder="Select Cities">
+        <template #optiongroup="slotProps">
+          <div class="flex align-items-center country-item">
+            <div>{{ slotProps.option.label }}</div>
+          </div>
+        </template>
       </MultiSelect>
       <Button icon="pi pi-plus" class="p-button-rounded p-button-secondary buttons"
               @click="displayMaximizable=true "/>
@@ -47,7 +52,8 @@
     <div class="container">
       <div class="row">
         <router-link to=""></router-link>
-        <div class="col-md-3" style="padding-bottom: 50px; padding-top: 50px" v-for="real in getDatas" :key="real">
+        <div class="col-md-3" style="padding-bottom: 50px; padding-top: 50px" v-for="real in filterByCategory"
+             :key="real">
           <router-link :to="{name: 'realView', params: {real: JSON.stringify(real)}  }"
                        style="text-decoration: none">
             <Card style="width: 20em; height: 600px"
@@ -95,17 +101,8 @@ export default {
       position: 'center',
       value2: "",
       data: this.getData,
-      selectedGroupedCities: null,
-      groupedCities: [
-        {
-          label: 'Typ',
-          items: [
-            {label: 'Test', value: 'Kyoto'},
-            {label: 'Osaka', value: 'Osaka'},
-            {label: 'Tokyo', value: 'Tokyo'},
-            {label: 'Yokohama', value: 'Yokohama'}
-          ]
-        }],
+      selectedGroupedCities: [],
+      realFilter: [],
       newReal: {
         title: "",
         location: "",
@@ -115,7 +112,15 @@ export default {
         condition: "",
         text: "",
         image: "byt1"
-      }
+      },
+      category: "",
+      groupedCities: [{
+        label: 'Kategoria',
+        items: [
+          {label: 'Berlin', value: 'Berlin'},
+        ]
+      }],
+      // items: Array.from({length: 1000}, (_, i) => ({label: `Item #${i}`, value: i}))
     }
   },
   computed: {
@@ -126,13 +131,21 @@ export default {
       return this.getData
     },
 
-    rightProperty() {
-      return this.getData[this.sport].filter((a) => {
-        if (this.stateFilter.length === 0) return true;
-        else if (this.stateFilter.indexOf(a.state) >= 0) return true;
-        return false;
-      });
+    filterByCategory: function () {
+      return this.getDatas.filter(category => !category.category.indexOf(this.category))
     },
+
+
+
+    //
+    // filteredProducts() {
+    //   return this.getDatas.filter((real) => {
+    //     return real.categories.filter((category) => {
+    //       return category === this.selectedCategory;
+    //     }).length > 0;
+    //   }
+    // },
+
     rightMatches() {
       return this.getMatches(this.sport).filter((a) => {
         if (this.stateFilter.length === 0) return true;
@@ -156,6 +169,10 @@ export default {
       this.closeDialog()
     },
 
+    getRealCategory(category) {
+      return this.getDatas.find((a) => a.category === category);
+    },
+
     closeDialog() {
       this.displayMaximizable = false;
     },
@@ -168,9 +185,16 @@ export default {
       this.displayMaximizable = false;
     },
 
-    // getItems() {
-    //   this.getDatas.category
-    // },
+    onSelectAllChange(event) {
+      this.selectedItems = event.checked ? this.items.map((item) => item.value) : [];
+      this.selectAll = event.checked;
+    },
+    onChange(event) {
+      this.selectAll = event.value.length === this.items.length
+    }
+  },
+  created() {
+    console.log(this.getRealCategory())
   }
 }
 
@@ -254,6 +278,7 @@ export default {
 // }
 
 // }
+
 
 </script>
 
